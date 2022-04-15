@@ -18,40 +18,42 @@ class Weather():
         self.precipitation = precipitation
         self.wind = wind
 
-
     def make_description(self):
         description = ""
-        description += "High: " + str(self.temperature[1]) + " Fearhenheit, Low: " + str(self.temperature[0]) + ", "
+        description += "High: " + str(self.temperature[1]) + " Farenheit, Low: " + str(self.temperature[0]) + " Farenheit, "
         description += str(self.cloud_cover) + ", "
 
         if (self.temperature[1] + self.temperature[0]) / 2 > 32:
             if self.precipitation == 0:
-                desc += "No Rain, "
+                description += "No Rain, "
             if self.precipitation < 0.098:
-                desc += "Light Rain, "
+                desription += "Light Rain, "
             elif self.precipitation > 0.098 and self.precipitation < .39:
-                dec += "Moderate Rain, "
+                description += "Moderate Rain, "
             elif self.precipitation > .39 and self.precipitation < 2.0:
-                desc += "Heavy Rain, "
+                description += "Heavy Rain, "
             elif self.precipitation > 2.0:
-                desc += "Violent Rain, "
+                description += "Violent Rain, "
         elif (self.temperature[1] + self.temperature[0]) / 2 < 33:
             if self.precipitation == 0:
-                desc += "No Snow, "
+                description += "No Snow, "
             if self.precipitation > 0 or self.precipitation < 1: 
-                desc += "Flurries of snow, "
+                description += "Flurries of snow, "
             else:
-                desc += str(self.precipitation) + " inches of snow, "
+                description += str(self.precipitation) + " inches of snow, "
             
-        desc += str(self.wind[1]) + " " + str(self.wind[0]) + " winds."
+        description += str(self.wind[1]) + " " + str(self.wind[0]) + " winds."
 
+        print(description)
         return description
+
     
 def advice(Day):
     print()
 
 def main():
-    print()
-    
+    day = Day(1, 1 , 2000, Weather)
+    print(day.Weather.make_description)
+
 if __name__ == "__main__":
     main()
