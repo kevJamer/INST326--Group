@@ -11,7 +11,7 @@ class Day():
         Weather: 
         
     '''
-    def __init__(self, Date=0, Month=0, Year=0, Weather=list):
+    def __init__(self, Date=0, Month=0, Year=0):
         """ Initializes a Day object.
 
         Args:
@@ -24,9 +24,9 @@ class Day():
            
         """
         self.date = Date
-        self.Month = Month
-        self.Year = Year
-        self.Weather = Weather((32,60),"Partilaly Cloudy",.25,('NW',5))
+        self.month = Month
+        self.year = Year
+        #self.Weather = Weather((32,60),"Partilaly Cloudy",.25,('NW',5))
     
 class Weather():
     ''' Holds data varibles for the weather '''
