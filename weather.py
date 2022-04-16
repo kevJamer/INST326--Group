@@ -3,22 +3,63 @@ import sys
 from argparse import ArgumentParser
 
 class Day():
-    def __init__(self, Date, Month, Year, Weather):
+    ''' holds the days of the week
+    Attributes:
+        Date: a integer value holding the day 
+        Month: a intger vaule holding the month
+        Year: a intger vaule holding the year
+        Weather: 
+        
+    '''
+    def __init__(self, Date=0, Month=0, Year=0, Weather=list):
+        """ Initializes a Day object.
+
+        Args:
+            Date: a integer value holding the day 
+            Month: a intger vaule holding the month
+            Year: a intger vaule holding the year
+            Weather:
+            
+        RaiseVaule:
+           
+        """
         self.date = Date
         self.Month = Month
         self.Year = Year
         self.Weather = Weather((32,60),"Partilaly Cloudy",.25,('NW',5))
     
 class Weather():
-    # precip = inches/hr if rain and incches after snow for snow
+    ''' Holds data varibles for the weather '''
+    # precip = inches/hr if rain and incches after snow for snow    
 
-    def __init__(self, temperature, cloud_cover, precipitation, wind):
+    def __init__(self, temperature=tuple, cloud_cover=str, precipitation=float, wind=tuple):
+        """ Initializes a Weather object.
+
+        Args:
+            temperature: a integer value holding the temperature in degrees Farenhight 
+            cloud_cover: sting value that holds cloud cover information
+            precipitation: a intger vaule holding the amount of precipitation as a percentage.
+            wind: a tuple containg the dircetion of the wind as a str and the speed in mph as a int
+            
+        RaiseVaule:
+           
+        """        
         self.temperature = temperature
         self.cloud_cover = cloud_cover
         self.precipitation = precipitation
         self.wind = wind
-
+        
+        
     def make_description(self):
+        """ creates 
+
+        Args:
+            Self:
+            
+        Return: 
+             description: 
+           
+        """   
         description = ""
         description += "High: " + str(self.temperature[1]) + " Farenheit, Low: " + str(self.temperature[0]) + " Farenheit, "
         description += str(self.cloud_cover) + ", "
@@ -48,12 +89,33 @@ class Weather():
         return description
 
     
-def advice(Day):
+def advice(description):
+    """ gives the advice on what the user should do 
+
+        Args:
+            
+            
+        Return: 
+             advice_user: returns the advice needed to be given by the user as a str.
+           
+        """   
     print()
 
 def main():
+    """ Main statment
+
+        Args:
+            
+            
+        sideeffect: 
+             print: prints out the results of make_description.
+           
+        """   
     day = Day(1, 1 , 2000, Weather)
     print(day.Weather.make_description)
 
 if __name__ == "__main__":
     main()
+    
+    
+
