@@ -8,7 +8,7 @@ openweathermap = API()
 weathermap = openweathermap.get_current_weather()
 city_name = weathermap['city']
 city_temp = weathermap['temp']   
-daily = openweathermap.get_daily_weather()
+daily = openweathermap.get_daily_weather(city_name)
 
 weather_program = Weather((city_temp,city_temp),city_name,.5,(5,6))
 weather = weather_program.make_description()

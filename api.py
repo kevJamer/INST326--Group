@@ -42,7 +42,7 @@ class API():
         city = city_name
         temp_min = response["daily"]
         temp_min = temp_min[0]["temp"]["min"]
-        temp_max= response['daily'][0]
+        temp_max= response['daily'][0]["temp"]["max"]
         temp_min = int((temp_min * 1.8) - 459.67)
         temp_max = int((temp_max * 1.8) - 459.67)
         date = response["daily"][1]["dt"]
