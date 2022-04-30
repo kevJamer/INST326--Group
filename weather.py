@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 import sys
 from argparse import ArgumentParser
 
