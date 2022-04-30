@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from tkinter import *
 import requests
 
@@ -6,7 +6,7 @@ import requests
 
 class API():
     
-    api_key = f"f2a3f0a69be836e5147d815b9ff939ba"  
+    api_key = f"de24ba549fe9b21406f59888864dfaf2"  
     
     def __init__(self):
          
@@ -31,10 +31,34 @@ class API():
             'temp' : temperature,
             'city' : city_name
         }
+    def get_daily_weather(self,city_name):
+        
+        geo = f"http://api.openweathermap.org/geo/1.0/zip?zip={self.zip_code}&appid={self.api_key}"
+        geocoder = requests.get(geo).json()
+        lat = geocoder['lat']
+        lon = geocoder['lon']
+        url = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=&appid={self.api_key}"
+        response = requests.get(url).json() 
+        city = city_name
+        temp_min = response["daily"]
+        temp_min = temp_min[0]["temp"]["min"]
+        temp_max= response['daily'][0]
+        temp_min = int((temp_min * 1.8) - 459.67)
+        temp_max = int((temp_max * 1.8) - 459.67)
+        date = response["daily"][1]["dt"]
+        offset = response["timezone_offset"]
+        date = date-offset
+        date = datetime.fromtimestamp(date) 
+        return {
+            "date" : str(date),
+             "min" : temp_min,
+             "max" : temp_max
+        }
     
-    
-zip_code = "20742"
+zip_code = "20603"
 api = API()
-weather = api.get_current_weather()
-
+current_weather = api.get_current_weather()
+city = current_weather["city"]
+day_weather = api.get_daily_weather(city)
+print(day_weather)
 
