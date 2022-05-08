@@ -1,7 +1,9 @@
 import tkinter as tk
-from api import API
+from api import *
 from weather import Weather
 from PIL import ImageTk, Image
+import os
+import sys
 
 
 openweathermap = API()
@@ -20,6 +22,9 @@ class Main(tk.Tk):
     def __init__(self, *args, **kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
+        self.title(f"{city_name}")
+        self.geometry("500x400")
+        self.maxsize(1000,800)
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand = True)
         container.grid_rowconfigure(0, weight=1)
@@ -39,6 +44,7 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self, text=f"{city_name}", font=LARGE_FONT)
+        label.config(font =("Consolas",100))
         label.pack(pady=10,padx=10)
         temp = tk.Label(self, text=f"{city_temp} f")
         temp.config(font =("Consolas",22))
@@ -47,12 +53,38 @@ class StartPage(tk.Frame):
         program.config(font =("Consolas",15))
         program.pack(side='top')
         
-        button2 = tk.Button(self, text="Visit Page 1",
+        self.lab_text = tk.StringVar(self)
+        lab = tk.Label(self,text = "some text",textvariable=self.lab_text)
+        lab.pack()
+        
+        self.entry_text = tk.StringVar(self)
+        entry = tk.Entry(self,textvariable=self.entry_text)
+        entry.pack()
+       
+        user_zip = tk.Button(self, text="submit", command=self.press_button)
+        user_zip.pack()
+        
+        
+        button2 = tk.Button(self, text="Visit Page 2",
                             command=lambda: controller.show_frame(PageOne))
         button2.pack(side="bottom")
-        button = tk.Button(self, text="Visit Page 2",
+        button = tk.Button(self, text="Visit Page 1",
                             command=lambda: controller.show_frame(PageTwo))
         button.pack(side="bottom")
+        
+    def press_button(self):
+        text = self.entry_text.get()
+        self.lab_text.set(text)
+        f= open("zip_code_update.txt", "w")
+        f.write(f"{text}")
+        f.close()
+        os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)   
+  
+        
+       
+
+        
+        
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -93,5 +125,6 @@ class PageTwo(tk.Frame):
                             command=lambda: controller.show_frame(PageOne))
         button2.pack()
         
+
 app = Main()
 app.mainloop()

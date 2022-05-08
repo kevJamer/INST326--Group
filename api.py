@@ -1,8 +1,6 @@
 from datetime import datetime
-from tkinter import *
+import tkinter as tk
 import requests
-
-
 
 class API():
     
@@ -19,7 +17,7 @@ class API():
    
         geo = f"http://api.openweathermap.org/geo/1.0/zip?zip={self.zip_code}&appid={self.api_key}"
         geocoder = requests.get(geo).json()
-        lat = geocoder['lat']
+        lat = geocoder["lat"]
         lon = geocoder['lon']
         url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.api_key}"
         response = requests.get(url).json() 
@@ -54,11 +52,13 @@ class API():
              "min" : temp_min,
              "max" : temp_max
         }
-    
-zip_code = "20603"
+
+
+f = open("zip_code_update.txt", "r")
+user_zip = f.read()
+zip_code = user_zip
 api = API()
 current_weather = api.get_current_weather()
 city = current_weather["city"]
 day_weather = api.get_daily_weather(city)
 print(day_weather)
-
