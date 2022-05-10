@@ -61,32 +61,33 @@ class Weather():
            
         """   
         description = ""
-        description += "High: " + str(self.temperature[1]) + " Farenheit, Low: " + str(self.temperature[0]) + " Farenheit, "
+        description += "\nHigh: " + str(self.temperature[1]) + " F,       Low: " + str(self.temperature[0]) + " F, \n"
         description += str(self.cloud_cover) + ", "
+        raintype= ""
 
         if (self.temperature[1] + self.temperature[0]) / 2 > 32:
             if self.precipitation == 0:
-                description += "No Rain, "
+                 raintype += "No Rain, "
             if self.precipitation < 0.098:
-                desription += "Light Rain, "
+                raintype += "Light Rain, "
             elif self.precipitation > 0.098 and self.precipitation < .39:
-                description += "Moderate Rain, "
+                raintype += "Moderate Rain, "
             elif self.precipitation > .39 and self.precipitation < 2.0:
-                description += "Heavy Rain, "
+                raintype += "Heavy Rain, "
             elif self.precipitation > 2.0:
-                description += "Violent Rain, "
+                raintype += "Violent Rain, "
         elif (self.temperature[1] + self.temperature[0]) / 2 < 33:
             if self.precipitation == 0:
-                description += "No Snow, "
+                raintype += "No Snow, "
             if self.precipitation > 0 or self.precipitation < 1: 
-                description += "Flurries of snow, "
+                raintype += "Flurries of snow, "
             else:
-                description += str(self.precipitation) + " inches of snow, "
+                raintype += str(self.precipitation) + " inches of snow, "
             
         description += str(self.wind[1]) + " " + str(self.wind[0]) + " winds."
 
         print(description)
-        return description
+        return (description,raintype)
 
     
 def advice(description):
