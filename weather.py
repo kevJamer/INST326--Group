@@ -86,7 +86,7 @@ class Weather():
             
         description += str(self.wind[1]) + " " + str(self.wind[0]) + " winds."
 
-        print(description)
+       
         return (description,raintype)
 
     
@@ -99,8 +99,7 @@ def advice(description):
         Return: 
              advice_user: returns the advice needed to be given by the user as a str.
            
-        """   
-    print()
+        """  
 
 def main():
     """ Main statment
@@ -112,11 +111,9 @@ def main():
              print: prints out the results of make_description.
            
         """   
-    day = Day(1, 1 , 2000, Weather)
-    print(day.Weather.make_description)
+    pass
 
-if __name__ == "__main__":
-    main()
+
     
     
 

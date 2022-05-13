@@ -37,6 +37,9 @@ try:
     tempday = daily['daytemp'] 
     tempeve = daily['evetemp'] 
     tempnight = daily['nighttemp']
+    sunrise = daily['sunrise']
+    sunset = daily['sunset']
+    current_hour = daily['current_hour']
     fivedayforcast= [daily['one_max_forcast'],daily['two_max_forcast'],daily['three_max_forcast'],daily['four_max_forcast'],daily['five_max_forcast']] 
 
     adv = Advice(tempday,tempeve,tempnight,rain_prob)
@@ -50,12 +53,13 @@ try:
 
     weather_program = Weather((city_temp_min,city_temp_max),dcloud_cover,rain_prob,(int(dwindspeed),dwind_dir))
     weather = weather_program.make_description()[0]
-    bgpicture = Picture(dcloud_cover,current_rain).choose_image()
+    bgpicture = Picture(dcloud_cover,current_rain,current_hour,sunrise,sunset).choose_image()
     
 except Exception:
     pass
 
-
+#the structure of this tkinter comes from instuctors examples modified
+#We used it to be able to have multiple pages everything else was changed besides minor formmating
 LARGE_FONT= ("Verdana", 18)
 class Main(tk.Toplevel):
     """ Creates the foundation of gui
@@ -187,10 +191,9 @@ class StartPage(tk.Frame):
         except Exception:
             
             
-            bg = Image.open("Images/space.jpeg")
+            bg = Image.open("space.jpeg")
             newsize = (600, 300) 
             bg = bg.resize(newsize)
-
             bg = ImageTk.PhotoImage(bg)
 
             error_can = tk.Canvas(self,width=600,height=250)
@@ -277,6 +280,7 @@ class StartPage(tk.Frame):
         f= open("zip_code_update.txt", "w")
         f.write(f"{text}")
         f.close()
+        # https://stackoverflow.com/questions/48129942/python-restart-program SangminKim
         os.execl(sys.executable, os.path.abspath(__file__), *sys.argv) 
   
   

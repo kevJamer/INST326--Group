@@ -333,6 +333,14 @@ try:
                 
                 
         def needunbrella(self):
+            """ gives appropiate response for unbrella
+
+
+            SideEffect:
+                a string contaning the response
+    
+            """  
+            
             if self.unbrella == True:
                 return "Would advice unbrella"
             elif self.daytemp and self.evetemp and self.nighttemp < 45 and self.unbrella == False:
@@ -342,6 +350,13 @@ try:
     
     
         def needhat(self):
+            """ gives  appropiate response for hat
+
+
+            Returns:
+                a string contaning the response
+    
+            """  
             if self.hat == True:
                 return "Dont forget your hat"
             else:
@@ -349,17 +364,17 @@ try:
                     
         
         def needgloves(self):
+            """ gives  appropiate response for gloves
+
+
+            SideEffect:
+                 a string contaning the response
+    
+            """  
             if self.gloves == True:
                 return "Its cold make sure you wear gloves"
             else:
                 return ""       
-                    
-    if __name__ == "__main__":
-        ice= Advice(tempday,tempeve,tempnight,rain_prob)
-        dayadv = ice.day_advice()
-        print(ice.jacket)
-        nightadv = ice.night_advice()
-        print(ice.jacket)
 
 except Exception:
     pass

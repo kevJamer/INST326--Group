@@ -142,7 +142,7 @@ class API():
             str varible contaning the descriptive term
   
         """ 
-        print(cloud)
+        
         if cloud >= 0 and cloud <10:
             return "Clear"
         elif cloud >= 10 and cloud <30: 
@@ -285,10 +285,3 @@ class API():
         }
 
 
-
-
-api = API()
-current_weather = api.get_current_weather()
-city = current_weather["city"]
-day_weather = api.get_daily_weather(city)
-print(day_weather)

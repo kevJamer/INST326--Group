@@ -1,0 +1,11 @@
+If you would like to test the appliactions abillity to send notifications without wating a entire day you should follow theses steps 
+1. Go to the notificationcenter.py file 
+2. Next in the class NotifcationCenter find the definition press_button
+3. in this method you will find another definition called email(text)
+4. if you go all the way to the bottom of the method you will see a line of code "schedule.every().day.do(email,text=f'{text}')"
+5. to test the codes functionality quicker you will need to change ().day parameter to something sonner 
+6. you can change it to ().mintue or ().second or more spcifically (20).seconds this will make the code repeat every 20 seconds 
+7. now run the script gui.py from the command line
+8. when both windows pop open click on the Notfication Center and enter your email
+9. After 20 seconds you will get an email with all the advice in it.
+10. this is how you test the code but remember to close out of the gui after you tested it or it will spam your email.

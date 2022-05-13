@@ -54,167 +54,198 @@ try:
     weather = weather_program.make_description()[0]
     bgpicture = Picture(dcloud_cover,current_rain).choose_image()
     
+
 except Exception:
     pass
 
 
-
-root = tk.Tk()
-root.title("Notification Center")
-root.geometry("600x600")
-root.config(bg="black")
-class NotificationCenter():
-    def __init__(self,main):
-        myframe = tk.Frame(main)
-        myframe.pack()
-        
-        Welcome = tk.Label(main,text = f"Welcome To The Notification Center For \n {city_name}", width = 200, font=("Verdana", 24) )
-        Welcome.pack(pady=50)
-        
-        inst = tk.Label(main,text= "If you want to get email updates everyday on what you should wear",width=200,font=("Verdana", 15),bg='black')
-        inst.pack()
-        
-        
-        self.lab_text = tk.StringVar(main)
-        lab = tk.Label(main,text = "some text",textvariable=self.lab_text,bg="black")
-        lab.pack()
-    
-    
-        self.entry_text = tk.StringVar(main)
-        entry = tk.Entry(main,textvariable=self.entry_text)
-        entry.pack()
-        note = tk.Label(main,text= "Please enter complete email",width=200,font=("Verdana", 10),bg='black')
-        note.pack()
-        user_email = tk.Button(main, text="submit", command=self.press_button,fg='black',bg='black')
-        user_email.pack(pady=10)
+try:
+    root = tk.Tk()
+    root.title("Notification Center")
+    root.geometry("600x600")
+    root.config(bg="black")
 
 
-        
-        warning = tk.Label(main,text= "Warning: You cannot exit this program if you want contious updates",width=200,font=("Verdana", 10),bg='black')
-        warning.pack(pady=50)
-    
-      
-      
-       
-    def press_button(self):
-           
-        """ determines what happen after hitting button
 
-           
-        SideEffect:
-            opens up and writes to a text document based on users input
-            restarts the entire program with new zip
+    class NotificationCenter():
+        '''allows user input and notifies the indivisual on suggestions
+        
+        '''
+        def __init__(self,main):
+        
+            """ initializes NotificationCenter object
+
+            Args:
+            main: tk.TK()
             
-        Rasies:
-            TypeError: if int value is not inputed 
-            ValueError: if correct zipcode is not instered.
-        """
-        text = self.entry_text.get()
-        self.entry_text.set("")
-        
-        def run_continuously(interval=1):
-            """Continuously run, while executing pending jobs at each
-            elapsed time interval.
-            @return cease_continuous_run: threading. Event which can
-            be set to cease continuous run. Please note that it is
-            *intended behavior that run_continuously() does not run
-            missed jobs*. For example, if you've registered a job that
-            should run every minute and you set a continuous run
-            interval of one hour then your job won't be run 60 times
-            at each interval but only once.
+
+            
+            SideEffect:
+                Creates a tkinter Frame with information
+    
             """
-            cease_continuous_run = threading.Event()
-
-            class ScheduleThread(threading.Thread):
-                @classmethod
-                def run(cls):
-                    while not cease_continuous_run.is_set():
-                        schedule.run_pending()
-                        time.sleep(interval)
-
-            continuous_thread = ScheduleThread()
-            continuous_thread.start()
-            return cease_continuous_run
-                
-                
-        
-        
-        def email(text):
-            msg = EmailMessage()
-            msg.set_content(f"{Body().BodyOne()}\n{Body().BodyTwo()}\n{Body().BodyThree()}")
-            msg['subject'] = "self.subject"
-            msg['to']=text
-                
-            user = "weatherapp326@gmail.com"
-            msg['from'] = user
-            password = "pwefmtpvuftyumon"
             
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(user,password)
-            print("login")
-            server.send_message(msg)
-            print('hi')
-            server.quit()
+            myframe = tk.Frame(main)
+            myframe.pack()
             
+            Welcome = tk.Label(main,text = f"Welcome To The Notification Center For \n {city_name}", width = 200, font=("Verdana", 24) )
+            Welcome.pack(pady=50)
+            
+            inst = tk.Label(main,text= "If you want to get email updates everyday on what you should wear",width=200,font=("Verdana", 15),bg='black')
+            inst.pack()
+            
+            
+            self.lab_text = tk.StringVar(main)
+            lab = tk.Label(main,text = "some text",textvariable=self.lab_text,bg="black")
+            lab.pack()
         
-        schedule.every().day.do(email,text=f'{text}')
+        
+            self.entry_text = tk.StringVar(main)
+            entry = tk.Entry(main,textvariable=self.entry_text)
+            entry.pack()
+            note = tk.Label(main,text= "Please enter complete email",width=200,font=("Verdana", 10),bg='black')
+            note.pack()
+            user_email = tk.Button(main, text="submit", command=self.press_button,fg='black',bg='black')
+            user_email.pack(pady=10)
 
-        # Start the background thread
-        stop_run_continuously = run_continuously()
 
-        # Do some other things...
-        time.sleep(1)
+            
+            warning = tk.Label(main,text= "Warning: You cannot exit this program if you want contious updates",width=200,font=("Verdana", 10),bg='black')
+            warning.pack(pady=50)
 
-        # Stop the background thread
-              
+        
+        
+        
+        
+        def press_button(self):
+            
+            """ determines what happen after hitting button
+
+            
+            SideEffect:
+                Emails user updates everyday on suggestions aslong as the window is open
+                
+            Rasies:
+                TypeError: if str value is not inputed 
+                ValueError: if non valid email is inputed
+            """
+            text = self.entry_text.get()
+            self.entry_text.set("")
+            # The def run_continously is directly from Daniel Bader https://schedule.readthedocs.io/en/stable/
+            def run_continuously(interval=1):
+            
+                cease_continuous_run = threading.Event()
+
+                class ScheduleThread(threading.Thread):
+                    @classmethod
+                    def run(cls):
+                        while not cease_continuous_run.is_set():
+                            schedule.run_pending()
+                            time.sleep(interval)
+
+                continuous_thread = ScheduleThread()
+                continuous_thread.start()
+                return cease_continuous_run
+                    
+                    
+            
+            
+            def email(text):
+            
+            
+            #This email structure we copied from a tutorial on youtube by Jake https://www.youtube.com/watch?v=B1IsCbXp0uE
+            #the contents we wrote ourselves 
+                msg = EmailMessage()
+                msg.set_content(f"{Body().BodyOne()}\n{Body().BodyTwo()}\n{Body().BodyThree()}")
+                msg['subject'] = f"Clothing Advice"
+                msg['to']=text
+                    
+                user = "weatherapp326@gmail.com"
+                msg['from'] = user
+                password = "pwefmtpvuftyumon"
+                
+                server = smtplib.SMTP("smtp.gmail.com", 587)
+                server.starttls()
+                server.login(user,password)
+        
+                server.send_message(msg)
+
+                server.quit()
+                
+            #aniel Bader https://schedule.readthedocs.io/en/stable/
+            schedule.every().day.do(email,text=f'{text}')
+
+            # Start the background thread
+            stop_run_continuously = run_continuously()
+
+            time.sleep(1)
+
+except Exception:
+    pass           
         
 
         
 
 
+try:
+    class Body():
+        ''' contains body of email
+        '''
+        def __init__(self):
+            """ initializes a Body object 
 
-class Body():
-    subject = "Clothing Advice"
-    body= ""
-    to=""
-    def __init__(self):
-     self.morning = adv.day_advice()
-     self.eve =  adv.eve_advice()
-     self.night =  adv.night_advice
-    
-    def needunbrella(self):
-        if adv.unbrella == True:
-            return "May need unbrella"
-        else:
-            return ""
+            
+            SideEffect:
+            Runs 
+                    adv.day_advice()
+                    adv.eve_advice()
+                    adv.night_advice
+            which modifies advice atributes
         
-    def needhat(self):
-        if adv.hat == True:
-            return "May need to bring a hat"
-        else:
-            return ""
+                
+            Return:
+                Retrun string values contaning the body of the email.
+        """
+
+            self.morning = adv.day_advice()
+            self.eve =  adv.eve_advice()
+            self.night =  adv.night_advice
         
-    def needgloves(self):
-        if adv.gloves == True:
-            return "May need to wear gloves"
-        else:
-            return ""
-     
-    def BodyOne(self):
-        self.morning
-        return f"Hello, The Current tempeture is: {city_temp} with an high of {city_temp_max}° and a low of {city_temp_min}°\nMorning suugestions:{adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
-    def BodyTwo(self):
-        self.eve
-        return f"Evening Suggestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
-    def BodyThree(self):
-        self.night
-        return f"Night Suggestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
+        def needunbrella(self):
+            if adv.unbrella == True:
+                return "May need unbrella"
+            else:
+                return ""
+            
+        def needhat(self):
+            if adv.hat == True:
+                return "May need to bring a hat"
+            else:
+                return ""
+            
+        def needgloves(self):
+            if adv.gloves == True:
+                return "May need to wear gloves"
+            else:
+                return ""
+        
+        def BodyOne(self):
+            self.morning
+            return f"Hello, The Current tempeture is: {city_temp} with an high of {city_temp_max}° and a low of {city_temp_min}°\nMorning suugestions:{adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
+        def BodyTwo(self):
+            self.eve
+            return f"Evening Suggestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
+        def BodyThree(self):
+            self.night
+            return f"Night Suggestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
         
 
 
 
 
-e = NotificationCenter(root)
+    e = NotificationCenter(root)
+
+except Exception:
+    pass
 
 
