@@ -63,4 +63,9 @@ else:
     time.sleep(3)
     print("Testing....")
 
+body = Body()
+print(body.BodyOne())
+print(body.BodyTwo())
+print(body.BodyThree())
+
     
