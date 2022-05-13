@@ -61,7 +61,7 @@ class Weather():
            
         """   
         description = ""
-        description += "\nHigh: " + str(self.temperature[1]) + " F,       Low: " + str(self.temperature[0]) + " F, \n"
+        description += "\nHigh: " + str(self.temperature[1]) + "° F,       Low: " + str(self.temperature[0]) + "° F, \n"
         description += str(self.cloud_cover) + ", "
         raintype= ""
 

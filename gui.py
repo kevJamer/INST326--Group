@@ -1,4 +1,5 @@
 
+from notificationcenter import *
 from datetime import date
 from struct import pack
 import tkinter as tk
@@ -14,7 +15,7 @@ try:
     from advice import Advice
 except Exception:
     pass
-import re
+
 
 
  #Creating varibles that contains dictionary vaules from imported APi() class
@@ -56,7 +57,7 @@ except Exception:
 
 
 LARGE_FONT= ("Verdana", 18)
-class Main(tk.Tk):
+class Main(tk.Toplevel):
     """ Creates the foundation of gui
      args
         tk.Tk:
@@ -76,7 +77,7 @@ class Main(tk.Tk):
   
         """
         
-        tk.Tk.__init__(self, *args, **kwargs)
+        tk.Toplevel.__init__(self, *args, **kwargs)
         
         try:
             self.title(f"{city_name}")
@@ -157,18 +158,19 @@ class StartPage(tk.Frame):
         
         
         try:
+
+        
             bg = Image.open(bgpicture)
             newsize = (600, 300) 
             bg = bg.resize(newsize)
 
             bg = ImageTk.PhotoImage(bg)
+            
 
             my_canvas = tk.Canvas(self,width=100,height=100)
             my_canvas.image = bg
             my_canvas.pack(fill="both",expand=True)
-            my_canvas.create_image(0,0,image=bg,anchor ="nw")
-        
-        
+            my_canvas.create_image(0,0,image =bg,anchor ="nw")
         
     
         
@@ -176,14 +178,16 @@ class StartPage(tk.Frame):
             label = tk.Label(self, text=f"{city_name}", font=LARGE_FONT)
             label.config(font =("Consolas",50))
             label.pack(pady=10,padx=10)
-            temp = tk.Label(self, text=f"{city_temp} f")
+            temp = tk.Label(self, text=f"{city_temp}° f")
             temp.config(font =("Consolas",22))
             temp.pack(side='top')
             program = tk.Label(self, text = f"{weather}",wraplength=300, justify="center")
             program.config(font =("Consolas",15))
             program.pack(side='top')
         except Exception:
-            bg = Image.open("space.jpeg")
+            
+            
+            bg = Image.open("Images/space.jpeg")
             newsize = (600, 300) 
             bg = bg.resize(newsize)
 
@@ -252,7 +256,7 @@ class StartPage(tk.Frame):
             text = forcastcanvas.create_text(3, 0, width =150, text=f"5-day forcast", font="Verdana, 20", fill="black",anchor='nw')
     
     
-            
+               
     
     def press_button(self):
            
@@ -306,23 +310,25 @@ class PageOne(tk.Frame):
         label.pack(pady=10,padx=10)
         
         try:
+            morningweather = tk.Label(self,text=f"For the Morning The tempeture is expected to be {tempday}°")
+            morningweather.pack(pady=10)
             adv.day_advice()
-            my_advice = tk.Label(self,text=f"{adv.jacket}{unbrellaadvice}")
+            my_advice = tk.Label(self,text=f"{adv.jacket}\n{unbrellaadvice}\n{hatadvice}\n{gloveadvice}")
             my_advice.pack(side="top")
         except Exception:   
             pass
  
 
-
-        button1 = tk.Button(self, text="Back to Home",
+        button3 = tk.Button(self, text="Back to home",
                                 command=lambda: controller.show_frame(StartPage))
+        button3.pack(side="bottom")     
+        button1 = tk.Button(self, text="Night Suggestions",
+                                command=lambda: controller.show_frame(PageThree))
         button1.pack(side="bottom")
         button2 = tk.Button(self, text="Evening Advice",
                                 command=lambda: controller.show_frame(PageTwo))
         button2.pack(side="bottom")
-        button3 = tk.Button(self, text="Night Advice",
-                                command=lambda: controller.show_frame(PageThree))
-        button3.pack(side="bottom")       
+  
 
 class PageTwo(tk.Frame):
     """ Page two of tkinter
@@ -347,18 +353,25 @@ class PageTwo(tk.Frame):
         label = tk.Label(self, text="Evening Advice", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
         try:
+            eveweather = tk.Label(self,text=f"For the Evening The tempeture is expected to be {tempeve}°")
+            eveweather.pack(pady=10)
             adv.eve_advice()
-            my_advice = tk.Label(self,text=f"{adv.jacket}{unbrellaadvice}")
+            my_advice = tk.Label(self,text=f"{adv.jacket}\n{unbrellaadvice}\n{hatadvice}\n{gloveadvice}")
             my_advice.pack(side="top")
         except Exception:
             pass
 
-        button1 = tk.Button(self, text="Back to Home",
+        
+        button3 = tk.Button(self, text="Back to Home",
                                 command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-        button2 = tk.Button(self, text="Page One",
+        button3.pack(side="bottom")
+        button1 = tk.Button(self, text="Night Suggestions",
+                                command=lambda: controller.show_frame(PageThree))
+        button1.pack(side="bottom")
+        button2 = tk.Button(self, text="Morning Suggestions",
                                 command=lambda: controller.show_frame(PageOne))
-        button2.pack()
+        button2.pack(side="bottom")
+
 
 class PageThree(tk.Frame):
     """ Page Three of tkinter
@@ -383,18 +396,23 @@ class PageThree(tk.Frame):
         label = tk.Label(self, text="Night Advice", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
         try:
+            nightweather = tk.Label(self,text=f"For the Night the tempeture is expected to be {tempnight}°")
+            nightweather.pack(pady=10)
             adv.night_advice()
-            my_advice = tk.Label(self,text=f"{adv.jacket}{unbrellaadvice}")
+            my_advice = tk.Label(self,text=f"{adv.jacket}\n{unbrellaadvice}\n{hatadvice}\n{gloveadvice}")
             my_advice.pack(side="top")
         except Exception:
             pass
 
         button1 = tk.Button(self, text="Back to Home",
                                 command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-        button2 = tk.Button(self, text="Page Two",
+        button1.pack(side="bottom")
+        button2 = tk.Button(self, text="Evening Advice",
                                 command=lambda: controller.show_frame(PageTwo))
-        button2.pack()        
+        button2.pack(side="bottom")
+        button3 = tk.Button(self, text="Morning Advice",
+                                command=lambda: controller.show_frame(PageOne))
+        button3.pack(side="bottom")       
 
         
 
@@ -402,3 +420,4 @@ class PageThree(tk.Frame):
 if __name__ == "__main__":
     app = Main()
     app.mainloop()
+    os._exit(0)

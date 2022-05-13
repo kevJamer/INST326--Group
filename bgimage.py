@@ -2,7 +2,7 @@
 from api import API
 
 
-    #Creating varibles that contains dictionary vaules from imported APi() class
+#Creating varibles that contains dictionary vaules from imported APi() class
 try:
     openweathermap = API()
     weathermap = openweathermap.get_current_weather()
@@ -18,6 +18,9 @@ try:
     dcloud_cover = daily['dcloud_cover']
     timezone = daily['timezone']
     current_rain=daily['isitrain']
+    sunset = daily['sunset']
+    sunrise = daily['sunrise']
+    current_hour = daily['current_hour']
 
 
 
@@ -40,17 +43,17 @@ try:
         """
         
         
-        rainbg = "rain_bg.jpeg"
-        snowbg= "snow.jpg"
-        cloudybg = "cloudy_bg.jpeg"
-        sunnybg = "sunny_bg.jpeg"
-        partly_cloddybg = "partly_bg.jpeg"
-        night_timebg = "night_clear.jpeg"
-        night_clearbg = "night_clearbg.jpg"
-        night_cloudybg = "night_cloudybg.jpg"
-        night_mostly_cloudybg = "night_mostly_cloudybg.jpg"
-        day_rainbg = "day_rainbg.jpg"
-        night_partly_cloudybg = "night_partly_cloudybg.jpg"
+        rainbg = "Images/rain_bg.jpeg"
+        snowbg= "Images/snow.jpg"
+        cloudybg = "Images/cloudy_bg.jpeg"
+        sunnybg = "Images/sunny_bg.jpeg"
+        partly_cloddybg = "Images/partly_bg.jpeg"
+        night_timebg = "Images/night_clear.jpeg"
+        night_clearbg = "Images/night_clearbg.jpg"
+        night_cloudybg = "Images/night_cloudybg.jpg"
+        night_mostly_cloudybg = "Images/night_mostly_cloudybg.jpg"
+        day_rainbg = "Images/day_rainbg.jpg"
+        night_partly_cloudybg = "images/night_partly_cloudybg.jpg"
 
         
         def __init__(self,cloud,rain):
@@ -59,7 +62,7 @@ try:
             Raises:
             ValueError: cloud must be a string contating the correct descriptions
             TypeErros: rain must be an int varible
-    
+
             """
             self.cloud = cloud
             self.rain = rain
@@ -75,9 +78,15 @@ try:
             
             Retuns:
                 bolean rather or not its night
-    
+
             """
-            pass
+            if sunrise > current_hour:
+                return True
+            elif sunrise < current_hour and current_hour <sunset:
+                return False
+            else:
+                return True
+                
         
         
         def isitrain (self):
@@ -92,7 +101,7 @@ try:
             
             Retuns:
                 boolean determinng if its raning
-    
+
             """
             if self.rain > 0:
                 isitrain = True
@@ -106,7 +115,7 @@ try:
             
             Retuns:
                 returns attribute containg the correct filename
-    
+
             """
             #daytime     
             
@@ -122,7 +131,7 @@ try:
                 return self.cloudybg
             elif self.isitnight() == False and self.isitrain() == True:
                 return self.day_rainbg
-           
+            
             #nighttime
             
             elif self.isitnight() == True and self.cloud == "Clear" and self.isitrain() == False:
@@ -135,10 +144,12 @@ try:
                 return self.night_partly_cloudybg
             elif self.isitnight() == True and self.cloud == "Cloudy" and self.isitrain() == True:
                 return self.rainbg 
+            else:
+                return self.rainbg
 
-    
-    if __name__ == "__main__"   :
-        bg = Picture(dcloud_cover,current_rain).choose_image()
-        print(bg)
+
+
+    bg = Picture(dcloud_cover,current_rain).choose_image()
+    print(bg)
 except Exception:
     pass

@@ -37,6 +37,24 @@ class API():
         return zip_code 
     
    
+    def dayornight(self,date,offset):
+        """ creates the right timezone
+
+        Args:
+           date(int): int value containg date in unix timestamp
+           offest(int): int value containg offset data based on the timezone 
+
+        Raises:
+           TypeError: all parameters must be int values
+           
+        Retuns:
+            string varible contaning formated date
+  
+        """
+        #calculate the date based on users timezone using the unix value + the unix offest besed on there timezone
+        time= date+offset
+        return time
+    
     def tell_date(self,date,offset):
         """ Converts the unix time stamp
 
@@ -200,6 +218,14 @@ class API():
         date = response["minutely"][0]["dt"]
         offset = response["timezone_offset"]
         con_date = self.tell_date(date,offset)
+        current_hour = response['minutely'][0]['dt']
+        current_hour = self.dayornight(current_hour,offset)
+        
+        #Day and Night
+        sunset = response['daily'][0]['sunset']
+        sunset = self.dayornight(sunset,offset)
+        sunrise = response['daily'][0]['sunrise']
+        sunrise = self.dayornight(sunrise,offset)
         
         #Rain
         daily_pop = response['daily'][0]["pop"]
@@ -253,15 +279,16 @@ class API():
              'three_max_forcast':three_day_forcast,
              'four_max_forcast':four_day_forcast,
              'five_max_forcast':five_day_forcast,
+             'sunset': sunset,
+             'sunrise': sunrise,
+             'current_hour':current_hour
         }
 
 
 
-try:
-    api = API()
-    current_weather = api.get_current_weather()
-    city = current_weather["city"]
-    day_weather = api.get_daily_weather(city)
-    print(day_weather)
-except Exception:
-    pass
+
+api = API()
+current_weather = api.get_current_weather()
+city = current_weather["city"]
+day_weather = api.get_daily_weather(city)
+print(day_weather)
