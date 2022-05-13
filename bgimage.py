@@ -31,15 +31,27 @@ try:
             sunnybg: holds name of image file 
             partly_cloudybg: holds name of image file 
             night_timebg: holds name of image file 
+            night_clearbg = holds name of image file 
+            night_cloudybg = holds name of image file 
+            night_mostly_cloudybg = holds name of image file 
+            day_rainbg = holds name of image file 
+            night_partly_cloudybg = holds name of image file 
+
         """
         
         
         rainbg = "rain_bg.jpeg"
-        snowbg= "snow"
+        snowbg= "snow.jpg"
         cloudybg = "cloudy_bg.jpeg"
         sunnybg = "sunny_bg.jpeg"
         partly_cloddybg = "partly_bg.jpeg"
         night_timebg = "night_clear.jpeg"
+        night_clearbg = "night_clearbg.jpg"
+        night_cloudybg = "night_cloudybg.jpg"
+        night_mostly_cloudybg = "night_mostly_cloudybg.jpg"
+        day_rainbg = "day_rainbg.jpg"
+        night_partly_cloudybg = "night_partly_cloudybg.jpg"
+
         
         def __init__(self,cloud,rain):
             """ Initializes a Picture object.
@@ -96,18 +108,32 @@ try:
                 returns attribute containg the correct filename
     
             """
-                
-            if self.cloud == "Clear" and self.isitrain() == False:
+            #daytime     
+            
+            if self.isitnight() == False and self.cloud == "Clear" and self.isitrain() == False:
                 return self.sunnybg
-            elif self.cloud == "Mostly Sunny":
+            elif self.isitnight() == False and self.cloud == "Mostly Sunny":
                 return self.sunnybg   
-            elif self.cloud == "partly cloudy":
+            elif self.isitnight() == False and self.cloud == "partly cloudy":
                 return self.partly_cloddybg
-            elif self.cloud == "Mostly Cloudy":
+            elif self.isitnight() == False and self.cloud == "Mostly Cloudy":
                 return self.partly_cloddybg
-            elif self.cloud == "Cloudy" and self.isitrain() == False:
+            elif self.isitnight() == False and self.cloud == "Cloudy" and self.isitrain() == False:
                 return self.cloudybg
-            elif self.cloud == "Cloudy" and self.isitrain() == True:
+            elif self.isitnight() == False and self.isitrain() == True:
+                return self.day_rainbg
+           
+            #nighttime
+            
+            elif self.isitnight() == True and self.cloud == "Clear" and self.isitrain() == False:
+                return self.night_clearbg
+            elif self.isitnight() == True and self.cloud == "Cloudy" and self.isitrain() == False:
+                return self.night_cloudybg
+            elif self.isitnight() == True and self.cloud == "Mostly Cloudy":
+                return self.night_mostly_cloudybg
+            elif self.isitnight() == True and self.cloud == "partly cloudy":
+                return self.night_partly_cloudybg
+            elif self.isitnight() == True and self.cloud == "Cloudy" and self.isitrain() == True:
                 return self.rainbg 
 
     
