@@ -2,7 +2,7 @@ import time
 from weather import *
 from bgimage import *
 from advice import *
-
+from notificationcenter import *
 
 #UNIT TEST
 
@@ -63,9 +63,9 @@ else:
     time.sleep(3)
     print("Testing....")
 
+
+
 body = Body()
 print(body.BodyOne())
 print(body.BodyTwo())
 print(body.BodyThree())
-
-    
