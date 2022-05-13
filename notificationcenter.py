@@ -231,7 +231,8 @@ try:
         
         def BodyOne(self):
             self.morning
-            return f"Hello, The Current tempeture is: {city_temp} with an high of {city_temp_max}° and a low of {city_temp_min}°\nMorning suugestions:{adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
+            return str(f"Hello, The Current tempeture is: {city_temp}° with an high of {city_temp_max}°"
+                        f" and a low of {city_temp_min}°\nMorning suugestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n")
         def BodyTwo(self):
             self.eve
             return f"Evening Suggestions: {adv.jacket}\n{self.needunbrella()}\n{self.needhat()}\n{self.needgloves()}\n"
@@ -247,5 +248,4 @@ try:
 
 except Exception:
     pass
-
 
